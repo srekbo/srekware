@@ -1,0 +1,12 @@
+server:
+        certs:
+                #put your certificates here
+                chain: ""
+                key: ""
+        #your server address here (for downloading new modules)
+        address: "https://example.com/"
+        download:
+                
+                path: "path/to/more-files/"
+                files: ["file1.py", "file2.py"]
+
