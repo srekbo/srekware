@@ -1,3 +1,8 @@
 __pycache__/
-config.yml.safe
 tkinter-error-no-screen
+key.pem
+chain.pem
+serverip
+modloader.py
+flow.txt
+loadmodules.py

@@ -14,10 +14,12 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
         print(self.path)
-httpd = HTTPServer(("0.0.0.0", 4443), RequestHandler)
-httpd.socket = ssl.wrap_socket(httpd.socket, keyfile=c.get("server.certs.key"), certfile=c.get("server.certs.chain"), server_side=True)
-print("StartServer")
-try:
-    httpd.serve_forever()
-except:
-    pass
+
+if __name__ == "__main__":
+    httpd = HTTPServer(("0.0.0.0", 4443), RequestHandler)
+    httpd.socket = ssl.wrap_socket(httpd.socket, keyfile=c.get("server.certs.key"), certfile=c.get("server.certs.chain"), server_side=True)
+    print("StartServer")
+    try:
+        httpd.serve_forever()
+    except:
+        pass
