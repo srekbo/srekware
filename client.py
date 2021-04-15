@@ -3,13 +3,19 @@
 import time
 import tkinter
 import requests
+import os
 
 #own modules
 import config as c
 
 
-def load_mods(modulnames):
+def load_mods():
     global mods
+    modulnames = []
+    for file in os.listdir("mods/"):
+        if file.endswith(".py") and not file.startswith(".py"):
+            file = file.strip(".py")
+            modulnames.append(file)
     text = ""
     for i in modulnames:
         text += "import mods." + i + " as " + i + "\n"
@@ -28,4 +34,5 @@ def load_mods(modulnames):
     for mod in mods:
         mods[mod].init()
 
-load_mods(["testmod", "testmod2"])
+if __name__ == "__main__":
+    load_mods()

@@ -5,4 +5,4 @@ if __name__ == "__main__":
     print("please import me")
     raise Exception
 else:
-    print("imported" + str(__name__))
+    print("imported " + str(__name__))
