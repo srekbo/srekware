@@ -6,3 +6,4 @@ serverip
 modloader.py
 flow.txt
 loadmodules.py
+client2.py

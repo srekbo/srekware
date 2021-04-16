@@ -1,5 +1,5 @@
 def init():
-    print("testmodul2 ist da")
+    print("testmodul3 ist da")
 
 if __name__ == "__main__":
     print("please import me")

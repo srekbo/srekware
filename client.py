@@ -1,38 +1,51 @@
 #!/usr/bin/env python3
 #imports
 import time
+import asyncio
 import tkinter
 import requests
 import os
+import importlib
 
 #own modules
-import config as c
+#import config as c
 
+active_modnames = []
 
-def load_mods():
-    global mods
+async def load_all_mods():
+    global mods, modnames, active_modnames
     modulnames = []
     for file in os.listdir("mods/"):
         if file.endswith(".py") and not file.startswith(".py"):
             file = file.strip(".py")
             modulnames.append(file)
-    text = ""
+    modules = {}
     for i in modulnames:
-        text += "import mods." + i + " as " + i + "\n"
-    text += "def init():\n"
-    text += "    modules = {}"
-    for i in modulnames:
-        text += "\n    modules[\""+ i +"\"]=" + i
-    text += "\n    return modules"
-
-    f = open("loadmodules.py","w")
-    f.write(text)
-    f.close()
-    time.sleep(0.5)
-    import loadmodules as l
-    mods = l.init()
+        modules[str(i)] = importlib.import_module("mods." + str(i))
+    mods = modules
+    modnames = modulnames
+    active_modnames = []
     for mod in mods:
         mods[mod].init()
+        active_modnames.append(mod)
+
+async def add_mods():
+    global mods, modnames, active_modnames
+    modulnames = []
+    for file in os.listdir("mods/"):
+        if file.endswith(".py") and not file.startswith(".py"):
+            file = file.strip(".py")
+            if not str(file) in modulnames:
+                modulnames.append(file)
+                mods[str(file)] = importlib.import_module("mods." + str(file))
+                mods[str(file)].init()
+                active_modnames.append(str(file))
+
+async def main():
+    await load_all_mods()
+    await asyncio.sleep(60)
+    await add_mods()
 
 if __name__ == "__main__":
-    load_mods()
+    asyncio.run(main())
+    print("Hi")
